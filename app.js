@@ -1,6 +1,8 @@
 import express from "express";
 import cors from "cors";
 import UsersRoute from "./routes/users.route.js";
+import GoalsRoute from "./routes/goals.route.js";
+import DonationsRoute from "./routes/donations.route.js";
 
 const app = express();
 
@@ -11,5 +13,7 @@ app.use(express.urlencoded({ extended: false }));
 
 //Routes
 app.use("/api/users", UsersRoute);
+app.use("/api/goals", GoalsRoute);
+app.use("/api/donations", DonationsRoute);
 
 export default app;

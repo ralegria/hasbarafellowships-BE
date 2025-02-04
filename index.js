@@ -1,8 +1,12 @@
 import { sequelize } from "./database/db.js";
 import app from "./app.js";
 
-/* import "./models/users.model.js";
-import "./models/roles.model.js"; */
+/*
+import "./models/users.model.js";
+import "./models/roles.model.js";
+import "./models/goals.model.js";
+import "./models/donations.model.js";
+*/
 
 const main = async () => {
   try {
