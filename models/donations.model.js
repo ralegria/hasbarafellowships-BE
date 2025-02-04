@@ -1,53 +1,51 @@
 import { DataTypes, literal } from "sequelize";
 import { sequelize } from "../database/db.js";
+import { User } from "./users.model.js";
 
-export const User = sequelize.define("users", {
+export const Donation = sequelize.define("donations", {
   id: {
     type: DataTypes.UUID,
     defaultValue: literal("gen_random_uuid()"),
     primaryKey: true,
   },
-  role_id: {
+  goal_id: {
+    type: DataTypes.UUID,
+    allowNull: false,
+  },
+  user_id: {
+    type: DataTypes.UUID,
+    allowNull: false,
+  },
+  donor_names: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  donor_lastnames: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  donor_email: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  amount_donated: {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
-  firstnames: {
+  qgiv_paymentID: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  lastnames: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  email: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  password: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  university_name: {
-    type: DataTypes.STRING,
-  },
-  page_title: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  page_description: {
-    type: DataTypes.STRING,
-  },
-  profile_pic: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  cover_pic: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  isDeleted: {
+  isPaymentCompleted: {
     type: DataTypes.BOOLEAN,
-    allowNull: false,
+    allowNull: true,
     defaultValue: false,
   },
+});
+
+User.hasMany(Donation, {
+  onDelete: "NO ACTION",
+  onUpdate: "NO ACTION",
+  foreignKey: "user_id",
+  sourceKey: "id",
 });

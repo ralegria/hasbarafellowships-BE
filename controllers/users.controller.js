@@ -15,6 +15,7 @@ export const createUser = async (req, res) => {
     const existingUser = await User.findOne({
       where: { email: req.body.email },
     });
+
     if (existingUser) {
       return res.status(400).json({ message: "Email already exists" });
     }
@@ -29,6 +30,11 @@ export const createUser = async (req, res) => {
 export const getSingleUser = async (req, res) => {
   try {
     const user = await User.findByPk(req.params.id);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
     res.json(user);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -38,6 +44,11 @@ export const getSingleUser = async (req, res) => {
 export const updateUser = async (req, res) => {
   try {
     const user = await User.findByPk(req.params.id);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
     await user.update(req.body);
     res.json(user);
   } catch (error) {
@@ -48,6 +59,11 @@ export const updateUser = async (req, res) => {
 export const softDeleteUser = async (req, res) => {
   try {
     const deletedUser = await User.findByPk(req.params.id);
+
+    if (!deletedUser) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
     await deletedUser.update({ isDeleted: true });
     res.json(deletedUser);
   } catch (error) {
