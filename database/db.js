@@ -1,11 +1,12 @@
+import "dotenv/config";
 import Sequelize from "sequelize";
 
 export const sequelize = new Sequelize(
-  "hasbara-donations",
+  process.env.DB_NAME,
   "postgres",
-  "1995",
+  process.env.DB_PASSWORD,
   {
-    host: "localhost",
+    host: process.env.DB_HOST,
     dialect: "postgres",
   }
 );
