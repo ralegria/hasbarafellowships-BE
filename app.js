@@ -3,6 +3,7 @@ import cors from "cors";
 import UsersRoute from "./routes/users.route.js";
 import GoalsRoute from "./routes/goals.route.js";
 import DonationsRoute from "./routes/donations.route.js";
+import AuthRoute from "./routes/auth.route.js";
 
 const app = express();
 
@@ -15,5 +16,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use("/api/users", UsersRoute);
 app.use("/api/goals", GoalsRoute);
 app.use("/api/donations", DonationsRoute);
+app.use("/api/auth", AuthRoute);
 
 export default app;

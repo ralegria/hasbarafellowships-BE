@@ -3,19 +3,20 @@ const router = Router();
 
 import {
   getUsers,
-  getSingleUser,
-  createUser,
   updateUser,
+  createUser,
+  getSingleUser,
   softDeleteUser,
 } from "../controllers/users.controller.js";
 
+import { verifyToken } from "../controllers/auth.controller.js";
 import { getDonationsByUser } from "../controllers/donations.controller.js";
 
-router.get("/", getUsers);
+router.get("/", verifyToken, getUsers);
 router.post("/", createUser);
-router.get("/:id", getSingleUser);
-router.get("/:user_id/donations", getDonationsByUser);
-router.put("/:id", updateUser);
-router.delete("/:id", softDeleteUser);
+router.get("/:id", verifyToken, getSingleUser);
+router.get("/:user_id/donations", verifyToken, getDonationsByUser);
+router.put("/:id", verifyToken, updateUser);
+router.delete("/:id", verifyToken, softDeleteUser);
 
 export default router;
