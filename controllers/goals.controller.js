@@ -27,7 +27,7 @@ export const getGoalHistory = async (req, res) => {
       where: { user_id: req.params.user_id },
     });
     if (!goals) {
-      return res.status(404).json({ message: "No goals found" });
+      return res.status(404).json({ message: "No goal found" });
     }
     res.json(goals);
   } catch (error) {
@@ -43,8 +43,6 @@ export const createGoal = async (req, res) => {
     });
 
   const createNewGoal = async (body, UPDATE = false) => {
-    console.log("UPDATE", UPDATE);
-
     if (UPDATE) {
       await Goal.update({ isMainGoal: false }, { where: { isMainGoal: true } });
     }

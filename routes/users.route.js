@@ -13,9 +13,9 @@ import { verifyToken } from "../controllers/auth.controller.js";
 import { getDonationsByUser } from "../controllers/donations.controller.js";
 
 router.get("/", verifyToken, getUsers);
-router.post("/", createUser);
-router.get("/:id", verifyToken, getSingleUser);
-router.get("/:user_id/donations", verifyToken, getDonationsByUser);
+router.post("/", verifyToken, createUser);
+router.get("/:id", getSingleUser);
+router.get("/:user_id/donations", getDonationsByUser);
 router.put("/:id", verifyToken, updateUser);
 router.delete("/:id", verifyToken, softDeleteUser);
 

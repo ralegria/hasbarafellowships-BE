@@ -32,18 +32,18 @@ export const User = sequelize.define("users", {
   },
   page_title: {
     type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: true,
   },
   page_description: {
     type: DataTypes.STRING,
   },
   profile_pic: {
     type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: true,
   },
   cover_pic: {
     type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: true,
   },
   isDeleted: {
     type: DataTypes.BOOLEAN,

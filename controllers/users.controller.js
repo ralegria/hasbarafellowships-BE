@@ -1,5 +1,6 @@
 import { User } from "../models/users.model.js";
 import bcrypt from "bcrypt";
+import { createToken } from "./auth.controller.js";
 
 export const getUsers = async (_, res) => {
   try {
@@ -37,13 +38,17 @@ export const createUser = async (req, res) => {
 
     const { password } = req.body;
     const hashedPass = await bcrypt.hash(password, 10);
-    console.log(hashedPass);
 
     const newUser = await User.create({
       ...req.body,
       password: hashedPass,
     });
-    res.json(newUser);
+
+    const token = await createToken(newUser.id);
+
+    res.setHeader("Content-Type", "application/json");
+    res.status(201);
+    res.json({ token, data: newUser });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
