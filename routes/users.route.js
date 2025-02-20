@@ -10,12 +10,16 @@ import {
 } from "../controllers/users.controller.js";
 
 import { verifyToken } from "../controllers/auth.controller.js";
-import { getDonationsByUser } from "../controllers/donations.controller.js";
+import {
+  getDonationsByUser,
+  getAmountCollectedByUser,
+} from "../controllers/donations.controller.js";
 
 router.get("/", verifyToken, getUsers);
-router.post("/", verifyToken, createUser);
+router.post("/", createUser);
 router.get("/:id", getSingleUser);
 router.get("/:user_id/donations", getDonationsByUser);
+router.get("/:user_id/collected", getAmountCollectedByUser);
 router.put("/:id", verifyToken, updateUser);
 router.delete("/:id", verifyToken, softDeleteUser);
 

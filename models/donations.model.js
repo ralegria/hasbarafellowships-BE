@@ -8,19 +8,11 @@ export const Donation = sequelize.define("donations", {
     defaultValue: literal("gen_random_uuid()"),
     primaryKey: true,
   },
-  goal_id: {
-    type: DataTypes.UUID,
-    allowNull: false,
-  },
   user_id: {
     type: DataTypes.UUID,
     allowNull: false,
   },
-  donor_names: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  donor_lastnames: {
+  donor_name: {
     type: DataTypes.STRING,
     allowNull: false,
   },
@@ -32,7 +24,7 @@ export const Donation = sequelize.define("donations", {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
-  qgiv_paymentID: {
+  payment_ID: {
     type: DataTypes.STRING,
     allowNull: false,
   },
