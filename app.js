@@ -4,8 +4,11 @@ import UsersRoute from "./routes/users.route.js";
 import GoalsRoute from "./routes/goals.route.js";
 import DonationsRoute from "./routes/donations.route.js";
 import AuthRoute from "./routes/auth.route.js";
+import HooksRoute from "./routes/hooks.route.js";
 
 const app = express();
+
+app.use("/api/hooks", express.raw({ type: "application/json" }), HooksRoute);
 
 //Middlewares
 app.use(cors());

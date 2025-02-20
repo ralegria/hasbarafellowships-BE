@@ -1,14 +1,16 @@
 import { Router } from "express";
-const router = Router();
 
 import {
   getDonation,
-  createDonation,
   updateDonation,
+  generateStripeURL,
 } from "../controllers/donations.controller.js";
+import { verifyToken } from "../controllers/auth.controller.js";
 
-router.get("/:id", getDonation);
-router.post("/", createDonation);
-router.put("/:id", updateDonation);
+const router = Router();
+
+router.get("/:id", verifyToken, getDonation);
+router.post("/generate", generateStripeURL);
+router.put("/:id", verifyToken, updateDonation);
 
 export default router;

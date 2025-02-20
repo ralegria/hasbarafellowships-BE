@@ -1,7 +1,6 @@
 import { DataTypes, literal } from "sequelize";
 import { sequelize } from "../database/db.js";
 import { User } from "./users.model.js";
-import { Donation } from "./donations.model.js";
 
 export const Goal = sequelize.define("goals", {
   id: {
@@ -28,12 +27,5 @@ User.hasMany(Goal, {
   onDelete: "NO ACTION",
   onUpdate: "NO ACTION",
   foreignKey: "user_id",
-  sourceKey: "id",
-});
-
-Goal.hasMany(Donation, {
-  onDelete: "NO ACTION",
-  onUpdate: "NO ACTION",
-  foreignKey: "goal_id",
   sourceKey: "id",
 });
