@@ -11,9 +11,27 @@ export const getUsers = async (_, res) => {
   }
 };
 
+export const verifyEmailExists = async (req, res) => {
+  try {
+    const user = await User.findOne({
+      where: { email: req.params.email },
+    });
+
+    if (user) {
+      return res.status(500).json({ message: "Email account already in use." });
+    }
+
+    if (!user) {
+      return res.status(200).json({ message: "Email account available." });
+    }
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 export const getSingleUser = async (req, res) => {
   try {
-    const user = await User.findByPk(req.params.id);
+    const user = await User.findOne({ where: { short_id: req.params.id } });
 
     if (!user) {
       return res.status(404).json({ message: "User not found" });
@@ -56,7 +74,7 @@ export const createUser = async (req, res) => {
 
 export const updateUser = async (req, res) => {
   try {
-    const user = await User.findByPk(req.params.id);
+    const user = await User.findOne({ where: { short_id: req.params.id } });
 
     if (!user) {
       return res.status(404).json({ message: "User not found" });
@@ -71,7 +89,9 @@ export const updateUser = async (req, res) => {
 
 export const softDeleteUser = async (req, res) => {
   try {
-    const deletedUser = await User.findByPk(req.params.id);
+    const deletedUser = await User.findOne({
+      where: { short_id: req.params.id },
+    });
 
     if (!deletedUser) {
       return res.status(404).json({ message: "User not found" });

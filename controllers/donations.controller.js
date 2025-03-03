@@ -15,8 +15,14 @@ export const getDonationsByUser = async (req, res) => {
 
 export const getAmountCollectedByUser = async (req, res) => {
   try {
+    const user = await User.findOne({
+      where: { short_id: req.params.user_id },
+    });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
     const donations = await Donation.findAll({
-      where: { isPaymentCompleted: true, user_id: req.params.user_id },
+      where: { isPaymentCompleted: true, user_id: user.id },
     });
     const amountCollected = donations.reduce(
       (total, donation) => total + donation.amount_donated,
@@ -52,14 +58,16 @@ export const createDonationHook = async (req, res) => {
   if (event.type === "checkout.session.completed") {
     const session = event.data.object;
 
-    const student = await User.findByPk(session?.metadata?.student_id);
+    const student = await User.findOne({
+      where: { short_id: session?.metadata?.student_id },
+    });
 
     if (!student) {
       return res.status(404).json({ message: "Student not found" });
     }
 
     const newDonation = await Donation.create({
-      user_id: session?.metadata?.student_id,
+      user_id: student.id,
       donor_name: session?.customer_details?.name,
       donor_email: session?.customer_details?.email,
       amount_donated: session?.amount_total,
@@ -73,7 +81,9 @@ export const createDonationHook = async (req, res) => {
 
 export const generateStripeURL = async (req, res) => {
   try {
-    const student = await User.findByPk(req.body.user_id);
+    const student = await User.findOne({
+      where: { short_id: req.body.user_id },
+    });
     if (!student) {
       return res.status(404).json({ message: "Student not found" });
     }

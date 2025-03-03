@@ -7,6 +7,7 @@ import {
   createUser,
   getSingleUser,
   softDeleteUser,
+  verifyEmailExists,
 } from "../controllers/users.controller.js";
 
 import { verifyToken } from "../controllers/auth.controller.js";
@@ -20,6 +21,7 @@ router.post("/", createUser);
 router.get("/:id", getSingleUser);
 router.get("/:user_id/donations", getDonationsByUser);
 router.get("/:user_id/collected", getAmountCollectedByUser);
+router.get("/verify_email/:email", verifyEmailExists);
 router.put("/:id", verifyToken, updateUser);
 router.delete("/:id", verifyToken, softDeleteUser);
 
